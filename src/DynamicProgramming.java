@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * 
  * @author Cyrus Vatandoost
@@ -9,11 +7,13 @@ import java.util.ArrayList;
  *
  */
 
+import java.util.ArrayList;
+
 public class DynamicProgramming {
 
 	public static void main(String[] args) {
-		assignTables(assignTablesInput1());
-		assignTables(assignTablesInput2());
+		assignTable(assignTableInput1());
+		assignTable(assignTableInput2());
 		partyBudget(partyBudgetInput1());
 		partyBudget(partyBudgetInput2());
 		cut(100, 3, new int[] {25, 50, 75});
@@ -21,7 +21,7 @@ public class DynamicProgramming {
 	}
 	
 	// matrix chain multiplication
-	public static void assignTables(String[] input) {
+	public static void assignTable(String[] input) {
 		System.out.println("matrix chain multiplication");
 		
     	Boolean debug = false;
@@ -91,29 +91,31 @@ public class DynamicProgramming {
     	}
     	
     	// print output
-    	printMatrixChainOutput(s, 1, array.length - 1,  matrixList);
+    	printMatrixChainOutput(s, 1, array.length - 1,  matrixList, false);
     	
 		System.out.println();
 		System.out.println();
 	}
    
-    public static void printMatrixChainOutput(int array[][], int i, int j, ArrayList<Matrix> matrixList) {
+    public static void printMatrixChainOutput(int array[][], int i, int j, ArrayList<Matrix> matrixList, Boolean inner) {
     	if(i == j) {
     		System.out.print(matrixList.get(i - 1).getLabel());
     	}
     	else {
-    		System.out.print("(");
-    		printMatrixChainOutput(array, i, array[i][j], matrixList);
-    		printMatrixChainOutput(array, array[i][j] + 1, j, matrixList);
-    	    System.out.print(")");
+    		if(inner)
+    			System.out.print("(");
+    		printMatrixChainOutput(array, i, array[i][j], matrixList, true);
+    		printMatrixChainOutput(array, array[i][j] + 1, j, matrixList, true);
+    		if(inner)
+    			System.out.print(")");
     	}
     }
 	
-	public static String[] assignTablesInput1() {
+	public static String[] assignTableInput1() {
 		return new String[] {"3", "A 10 30", "B 30 5", "C 5 60"};
 	}
 	
-	public static String[] assignTablesInput2() {
+	public static String[] assignTableInput2() {
 		return new String[] {"4", "A 4 10", "B 10 3", "C 3 12", "D 12 20", "E 20 7"};
 	}
 	
